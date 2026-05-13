@@ -311,7 +311,7 @@ function Verdict({
       s.poles * 1.5 +
       s.podiums * 0.8 +
       s.careerWinPct * 3 +
-      s.wetWeatherRating * 0.5
+      (s.wetWeatherRating ?? 0) * 0.5
     )
   })
 
