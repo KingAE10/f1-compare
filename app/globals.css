@@ -1,0 +1,181 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ─── Root Variables ─────────────────────────────────────────────── */
+:root {
+  --bg-base: #050505;
+  --font-display: 'Rajdhani', sans-serif;
+  --font-mono: 'IBM Plex Mono', monospace;
+  --font-body: 'Inter', sans-serif;
+}
+
+/* ─── Base Reset ─────────────────────────────────────────────────── */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: var(--font-body);
+  background: var(--bg-base);
+  color: #ffffff;
+  min-height: 100vh;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+h1,
+h2,
+h3,
+h4 {
+  font-family: var(--font-display);
+}
+
+/* ─── Scrollbar ──────────────────────────────────────────────────── */
+::-webkit-scrollbar {
+  width: 4px;
+  height: 4px;
+}
+::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.03);
+}
+::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.15);
+  border-radius: 2px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.3);
+}
+
+/* ─── Animations ─────────────────────────────────────────────────── */
+
+/* Motion streak — used by BackgroundMesh */
+@keyframes streak {
+  0% {
+    transform: translateX(-120%);
+    opacity: 0;
+  }
+  10% {
+    opacity: 1;
+  }
+  90% {
+    opacity: 0.4;
+  }
+  100% {
+    transform: translateX(220%);
+    opacity: 0;
+  }
+}
+
+/* Subtle pulse for glow elements */
+@keyframes glow-pulse {
+  0%,
+  100% {
+    opacity: 0.6;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+
+/* Fade up — used for section reveals */
+@keyframes fade-up {
+  from {
+    opacity: 0;
+    transform: translateY(24px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Spin — used for loading states */
+@keyframes spin-slow {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* ─── Utility Classes ────────────────────────────────────────────── */
+
+/* Glass morphism card */
+.glass {
+  background: rgba(255, 255, 255, 0.04);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 16px;
+}
+
+/* Neon glow helpers */
+.glow-red    { box-shadow: 0 0 24px #ff000055; }
+.glow-cyan   { box-shadow: 0 0 24px #00ffff44; }
+.glow-orange { box-shadow: 0 0 24px #ff800055; }
+.glow-gold   { box-shadow: 0 0 24px #ffd70055; }
+.glow-green  { box-shadow: 0 0 24px #00ffc855; }
+
+/* Animated streak element */
+.streak {
+  animation: streak 3s linear infinite;
+}
+
+/* Fade-up reveal */
+.fade-up {
+  animation: fade-up 0.6s ease-out forwards;
+}
+
+/* Pulse glow */
+.pulse-glow {
+  animation: glow-pulse 2s ease-in-out infinite;
+}
+
+/* Racing stripe accent */
+.racing-stripe {
+  position: relative;
+}
+.racing-stripe::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, transparent 0%, currentColor 50%, transparent 100%);
+  opacity: 0.6;
+}
+
+/* Mono number display */
+.mono {
+  font-family: var(--font-mono);
+}
+
+/* Clamp text utilities */
+.truncate-2 {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+/* ─── Selection Color ────────────────────────────────────────────── */
+::selection {
+  background: rgba(0, 191, 255, 0.25);
+  color: #ffffff;
+}
+
+/* ─── Focus Ring ─────────────────────────────────────────────────── */
+:focus-visible {
+  outline: 2px solid rgba(0, 191, 255, 0.6);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
