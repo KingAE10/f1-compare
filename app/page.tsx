@@ -1,27 +1,16 @@
 'use client'
 
-import { useState, useMemo, useEffect } from 'react'
+import { useState, useMemo } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 
 import BackgroundMesh from '@/components/BackgroundMesh'
 import DriverSelector from '@/components/DriverSelector'
-import DriverPanel from '@/components/DriverPanel'
 import DriverRadar from '@/components/RadarChart'
-import StatBar from '@/components/StatBar'
+import ComparisonCard from '@/components/ComparisonCard'
 
 import { DRIVERS } from '@/data/drivers'
 import { getThemeForDriver } from '@/lib/themes'
 import { DriverTheme } from '@/types'
-
-const HEAD_TO_HEAD_STATS = [
-  { label: 'Race Wins',           key: 'wins'          },
-  { label: 'Pole Positions',      key: 'poles'         },
-  { label: 'Podiums',             key: 'podiums'       },
-  { label: 'World Championships', key: 'championships' },
-  { label: 'Fastest Laps',        key: 'fastestLaps'   },
-  { label: 'Career Points',       key: 'points'        },
-  { label: 'Win %',               key: 'careerWinPct'  },
-] as const
 
 export default function Home() {
   const [slots, setSlots] = useState<(string | null)[]>([null, null, null])
@@ -104,34 +93,23 @@ export default function Home() {
                 xmlns="http://www.w3.org/2000/svg"
                 style={{ filter: 'drop-shadow(0 0 16px #DC0000cc)' }}
               >
-                {/* Body */}
                 <ellipse cx="120" cy="30" rx="90" ry="14" fill="#1a1a2e" />
-                {/* Nose */}
                 <polygon points="210,30 240,33 240,27" fill="#DC0000" />
-                {/* Cockpit */}
                 <ellipse cx="110" cy="22" rx="28" ry="9" fill="#0a0a1a" />
                 <ellipse cx="110" cy="20" rx="22" ry="5" fill="#1a1a3a" opacity="0.8" />
-                {/* Front wing */}
                 <rect x="195" y="37" width="35" height="5" rx="2" fill="#DC0000" />
                 <rect x="198" y="35" width="30" height="3" rx="1" fill="#ff4444" opacity="0.6" />
-                {/* Rear wing */}
                 <rect x="30" y="12" width="40" height="4" rx="2" fill="#DC0000" />
                 <rect x="45" y="16" width="10" height="14" fill="#DC0000" opacity="0.8" />
-                {/* Front left wheel */}
                 <ellipse cx="185" cy="40" rx="10" ry="10" fill="#111" stroke="#333" strokeWidth="2" />
                 <ellipse cx="185" cy="40" rx="5" ry="5" fill="#222" />
-                {/* Front right wheel */}
                 <ellipse cx="185" cy="20" rx="10" ry="10" fill="#111" stroke="#333" strokeWidth="2" />
                 <ellipse cx="185" cy="20" rx="5" ry="5" fill="#222" />
-                {/* Rear left wheel */}
                 <ellipse cx="70" cy="40" rx="12" ry="12" fill="#111" stroke="#333" strokeWidth="2" />
                 <ellipse cx="70" cy="40" rx="6" ry="6" fill="#222" />
-                {/* Rear right wheel */}
                 <ellipse cx="70" cy="20" rx="12" ry="12" fill="#111" stroke="#333" strokeWidth="2" />
                 <ellipse cx="70" cy="20" rx="6" ry="6" fill="#222" />
-                {/* Red accent stripe */}
                 <rect x="80" y="27" width="100" height="6" rx="3" fill="#DC0000" opacity="0.7" />
-                {/* Halo */}
                 <path d="M 95 20 Q 110 14 125 20" stroke="#aaa" strokeWidth="2" fill="none" opacity="0.6" />
               </svg>
             </motion.div>
@@ -185,8 +163,6 @@ export default function Home() {
 
         {/* ── HERO HEADER ──────────────────────────────────────────── */}
         <header className="relative pt-10 pb-6 px-4 overflow-hidden">
-
-          {/* Scanlines */}
           <div
             className="absolute inset-0 pointer-events-none opacity-[0.025]"
             style={{
@@ -194,7 +170,6 @@ export default function Home() {
             }}
           />
 
-          {/* Corner brackets */}
           {[['top-4 left-4', 'top-0 left-0', 'top-0 left-0'], ['top-4 right-4', 'top-0 right-0', 'top-0 right-0']].map(([pos, hPos, vPos], ci) => (
             <div key={ci} className={`absolute ${pos} w-8 h-8 pointer-events-none`}>
               <div className={`absolute ${hPos} w-full h-[2px] bg-red-600/50`} />
@@ -202,10 +177,8 @@ export default function Home() {
             </div>
           ))}
 
-          {/* Horizontal accent lines */}
           <div className="absolute top-0 left-0 right-0 h-[1px] bg-gradient-to-r from-transparent via-red-700/30 to-transparent" />
 
-          {/* Eyebrow */}
           <motion.div
             initial={{ opacity: 0, y: -8 }}
             animate={{ opacity: 1, y: 0 }}
@@ -217,7 +190,6 @@ export default function Home() {
             <div className="h-px w-16 bg-gradient-to-l from-transparent to-red-600/50" />
           </motion.div>
 
-          {/* Main title */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
@@ -226,36 +198,21 @@ export default function Home() {
           >
             <h1
               className="font-black tracking-tighter uppercase leading-none"
-              style={{
-                fontFamily: 'Rajdhani, sans-serif',
-                fontSize: 'clamp(64px, 12vw, 140px)',
-              }}
+              style={{ fontFamily: 'Rajdhani, sans-serif', fontSize: 'clamp(64px, 12vw, 140px)' }}
             >
-              <span
-                style={{
-                  color: '#DC0000',
-                  textShadow: '0 0 40px #DC000077',
-                }}
-              >
-                F1
-              </span>
+              <span style={{ color: '#DC0000', textShadow: '0 0 40px #DC000077' }}>F1</span>
               {' '}
               <span className="text-white">RIVAL</span>
               <br />
-              <span
-                className="text-white/80"
-                style={{ fontSize: '0.65em', letterSpacing: '0.15em' }}
-              >
+              <span className="text-white/80" style={{ fontSize: '0.65em', letterSpacing: '0.15em' }}>
                 MATRIX
               </span>
             </h1>
-
             <p className="text-[9px] tracking-[0.6em] text-white/20 uppercase mt-2">
               Select drivers · Compare stats · Find the GOAT
             </p>
           </motion.div>
 
-          {/* Animated underline */}
           <motion.div
             className="mx-auto mt-4 h-[1px]"
             style={{ background: 'linear-gradient(90deg, transparent, #DC0000, transparent)' }}
@@ -267,7 +224,6 @@ export default function Home() {
 
         {/* ── DRIVER SELECTOR AREA ─────────────────────────────────── */}
         <section className="px-4 pb-8">
-
           <motion.p
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
@@ -277,7 +233,6 @@ export default function Home() {
             ── Choose your drivers ──
           </motion.p>
 
-          {/* 3 large selector cards */}
           <div className="flex justify-center gap-5 flex-wrap">
             {[0, 1, 2].map(i => (
               <motion.div
@@ -298,7 +253,6 @@ export default function Home() {
             ))}
           </div>
 
-          {/* Prompt */}
           <AnimatePresence>
             {selectedDrivers.length < 2 && (
               <motion.p
@@ -325,51 +279,8 @@ export default function Home() {
               transition={{ duration: 0.6 }}
               className="max-w-6xl mx-auto px-4 space-y-6"
             >
-
-              {/* Driver Cards */}
-              <div className={`grid gap-4 ${selectedDrivers.length === 3 ? 'grid-cols-1 lg:grid-cols-3' : 'grid-cols-1 md:grid-cols-2'}`}>
-                <AnimatePresence mode="popLayout">
-                  {selectedDrivers.map((driver, i) => (
-                    <DriverPanel
-                      key={driver.id}
-                      driver={driver}
-                      theme={getThemeForDriver(driver.id)}
-                      panelIndex={i}
-                    />
-                  ))}
-                </AnimatePresence>
-              </div>
-
-              {/* Head to Head */}
-              <GlassSection
-                title="Head to Head"
-                subtitle="Career statistics"
-                right={
-                  <div className="flex gap-4">
-                    {selectedDrivers.map(d => {
-                      const t = getThemeForDriver(d.id)
-                      return (
-                        <div key={d.id} className="flex items-center gap-1.5">
-                          <div className="w-2 h-2 rounded-full" style={{ backgroundColor: t.accent, boxShadow: `0 0 6px ${t.glow}` }} />
-                          <span className="text-[10px] text-white/40 uppercase tracking-wider">{d.lastName}</span>
-                        </div>
-                      )
-                    })}
-                  </div>
-                }
-              >
-                <div className="pt-4">
-                  {HEAD_TO_HEAD_STATS.map(stat => (
-                    <StatBar
-                      key={stat.key}
-                      label={stat.label}
-                      statKey={stat.key as keyof (typeof selectedDrivers)[number]['stats']}
-                      drivers={selectedDrivers}
-                      themes={themesMap}
-                    />
-                  ))}
-                </div>
-              </GlassSection>
+              {/* Unified comparison card */}
+              <ComparisonCard drivers={selectedDrivers} />
 
               {/* Radar */}
               <GlassSection title="Performance Radar" subtitle="Normalized across selected drivers">
@@ -442,8 +353,8 @@ function Verdict({ drivers }: { drivers: NonNullable<(typeof DRIVERS)[number]>[]
     )
   })
   const maxScore = Math.max(...scores)
-  const winner = drivers[scores.indexOf(maxScore)]
-  const theme = getThemeForDriver(winner.id)
+  const winner   = drivers[scores.indexOf(maxScore)]
+  const theme    = getThemeForDriver(winner.id)
 
   return (
     <div
@@ -454,25 +365,33 @@ function Verdict({ drivers }: { drivers: NonNullable<(typeof DRIVERS)[number]>[]
         boxShadow: `0 0 60px ${theme.glow}11`,
       }}
     >
-      <div className="absolute inset-0 pointer-events-none" style={{ background: `radial-gradient(ellipse at center, ${theme.glow}11 0%, transparent 70%)` }} />
+      <div className="absolute inset-0 pointer-events-none"
+        style={{ background: `radial-gradient(ellipse at center, ${theme.glow}11 0%, transparent 70%)` }} />
 
       <p className="text-[9px] uppercase tracking-[0.5em] text-white/25 mb-4">── Matrix Verdict ──</p>
 
       <div className="flex justify-center gap-10 mb-6">
         {drivers.map((d, i) => {
-          const t = getThemeForDriver(d.id)
-          const pct = Math.round((scores[i] / maxScore) * 100)
+          const t       = getThemeForDriver(d.id)
+          const pct     = Math.round((scores[i] / maxScore) * 100)
           const isWinner = d.id === winner.id
           return (
             <div key={d.id} className="flex flex-col items-center gap-2">
-              <p className="text-[10px] uppercase tracking-widest font-bold" style={{ color: isWinner ? t.accent : 'rgba(255,255,255,0.3)' }}>
+              <p className="text-[10px] uppercase tracking-widest font-bold"
+                style={{ color: isWinner ? t.accent : 'rgba(255,255,255,0.3)' }}>
                 {d.lastName}
               </p>
               <div className="relative h-16 w-8 bg-white/5 rounded-full overflow-hidden flex items-end">
-                <motion.div className="w-full rounded-full" style={{ background: `linear-gradient(0deg, ${t.primary}, ${t.accent})` }}
-                  initial={{ height: 0 }} animate={{ height: `${pct}%` }} transition={{ duration: 1.4, ease: 'easeOut', delay: 0.3 }} />
+                <motion.div
+                  className="w-full rounded-full"
+                  style={{ background: `linear-gradient(0deg, ${t.primary}, ${t.accent})` }}
+                  initial={{ height: 0 }}
+                  animate={{ height: `${pct}%` }}
+                  transition={{ duration: 1.4, ease: 'easeOut', delay: 0.3 }}
+                />
               </div>
-              <p className="text-xs font-black" style={{ color: isWinner ? t.accent : 'rgba(255,255,255,0.25)', fontFamily: 'Rajdhani, sans-serif' }}>
+              <p className="text-xs font-black"
+                style={{ color: isWinner ? t.accent : 'rgba(255,255,255,0.25)', fontFamily: 'Rajdhani, sans-serif' }}>
                 {pct}%
               </p>
             </div>
@@ -480,10 +399,13 @@ function Verdict({ drivers }: { drivers: NonNullable<(typeof DRIVERS)[number]>[]
         })}
       </div>
 
-      <p className="text-5xl font-black uppercase" style={{ fontFamily: 'Rajdhani, sans-serif', color: theme.accent, textShadow: `0 0 30px ${theme.glow}88` }}>
+      <p className="text-5xl font-black uppercase"
+        style={{ fontFamily: 'Rajdhani, sans-serif', color: theme.accent, textShadow: `0 0 30px ${theme.glow}88` }}>
         {winner.name}
       </p>
-      <p className="text-[10px] text-white/20 mt-2 tracking-widest uppercase">Leads across weighted career metrics</p>
+      <p className="text-[10px] text-white/20 mt-2 tracking-widest uppercase">
+        Leads across weighted career metrics
+      </p>
     </div>
   )
 }
