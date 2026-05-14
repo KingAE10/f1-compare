@@ -1,10 +1,11 @@
+/* globals.css */
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 /* ─── Root Variables ─────────────────────────────────────────────── */
 :root {
-  --bg-base: #050505;
+  --bg-base: #07070f;
   --font-display: 'Rajdhani', sans-serif;
   --font-mono: 'IBM Plex Mono', monospace;
   --font-body: 'Inter', sans-serif;
@@ -19,13 +20,16 @@
   padding: 0;
 }
 
+/* THE FIX: background goes on html, body stays transparent */
+/* body { background: ... } was burying BackgroundMesh under a solid layer */
 html {
   scroll-behavior: smooth;
+  background: var(--bg-base);
 }
 
 body {
   font-family: var(--font-body);
-  background: var(--bg-base);
+  background: transparent;
   color: #ffffff;
   min-height: 100vh;
   overflow-x: hidden;
@@ -58,57 +62,29 @@ h4 {
 
 /* ─── Animations ─────────────────────────────────────────────────── */
 
-/* Motion streak — used by BackgroundMesh */
 @keyframes streak {
-  0% {
-    transform: translateX(-120%);
-    opacity: 0;
-  }
-  10% {
-    opacity: 1;
-  }
-  90% {
-    opacity: 0.4;
-  }
-  100% {
-    transform: translateX(220%);
-    opacity: 0;
-  }
+  0%   { transform: translateX(-120%); opacity: 0; }
+  10%  { opacity: 1; }
+  90%  { opacity: 0.4; }
+  100% { transform: translateX(220%); opacity: 0; }
 }
 
-/* Subtle pulse for glow elements */
 @keyframes glow-pulse {
-  0%,
-  100% {
-    opacity: 0.6;
-  }
-  50% {
-    opacity: 1;
-  }
+  0%, 100% { opacity: 0.6; }
+  50%       { opacity: 1; }
 }
 
-/* Fade up — used for section reveals */
 @keyframes fade-up {
-  from {
-    opacity: 0;
-    transform: translateY(24px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+  from { opacity: 0; transform: translateY(24px); }
+  to   { opacity: 1; transform: translateY(0); }
 }
 
-/* Spin — used for loading states */
 @keyframes spin-slow {
-  to {
-    transform: rotate(360deg);
-  }
+  to { transform: rotate(360deg); }
 }
 
 /* ─── Utility Classes ────────────────────────────────────────────── */
 
-/* Glass morphism card */
 .glass {
   background: rgba(255, 255, 255, 0.04);
   backdrop-filter: blur(14px);
@@ -117,49 +93,28 @@ h4 {
   border-radius: 16px;
 }
 
-/* Neon glow helpers */
 .glow-red    { box-shadow: 0 0 24px #ff000055; }
 .glow-cyan   { box-shadow: 0 0 24px #00ffff44; }
 .glow-orange { box-shadow: 0 0 24px #ff800055; }
 .glow-gold   { box-shadow: 0 0 24px #ffd70055; }
 .glow-green  { box-shadow: 0 0 24px #00ffc855; }
 
-/* Animated streak element */
-.streak {
-  animation: streak 3s linear infinite;
-}
+.streak      { animation: streak 3s linear infinite; }
+.fade-up     { animation: fade-up 0.6s ease-out forwards; }
+.pulse-glow  { animation: glow-pulse 2s ease-in-out infinite; }
 
-/* Fade-up reveal */
-.fade-up {
-  animation: fade-up 0.6s ease-out forwards;
-}
-
-/* Pulse glow */
-.pulse-glow {
-  animation: glow-pulse 2s ease-in-out infinite;
-}
-
-/* Racing stripe accent */
-.racing-stripe {
-  position: relative;
-}
+.racing-stripe { position: relative; }
 .racing-stripe::before {
   content: '';
   position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
+  top: 0; left: 0; right: 0;
   height: 2px;
   background: linear-gradient(90deg, transparent 0%, currentColor 50%, transparent 100%);
   opacity: 0.6;
 }
 
-/* Mono number display */
-.mono {
-  font-family: var(--font-mono);
-}
+.mono { font-family: var(--font-mono); }
 
-/* Clamp text utilities */
 .truncate-2 {
   display: -webkit-box;
   -webkit-line-clamp: 2;

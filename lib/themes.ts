@@ -1,3 +1,4 @@
+// lib/themes.ts
 import { DriverTheme } from '@/types'
 
 export const DRIVER_THEMES: Record<string, DriverTheme> = {
@@ -100,13 +101,20 @@ export function getThemeForDriver(driverId: string): DriverTheme {
 }
 
 export function blendGradients(themes: DriverTheme[]): string {
-  if (themes.length === 0) return '#050505'
+  if (themes.length === 0)
+    return `radial-gradient(ellipse at 20% 50%, #5a0000 0%, transparent 65%),
+            radial-gradient(ellipse at 80% 20%, #120025 0%, transparent 65%),
+            radial-gradient(ellipse at 50% 90%, #001a33 0%, transparent 65%),
+            #07070f`
 
   const positions = ['20% 50%', '80% 20%', '50% 80%']
+
+  // opacity bumped: 44 (~27%) → 88 (~53%) so the glows actually show
   const radials = themes.map(
     (theme, i) =>
-      `radial-gradient(ellipse at ${positions[i % positions.length]}, ${theme.primary}44 0%, transparent 55%)`
+      `radial-gradient(ellipse at ${positions[i % positions.length]}, ${theme.primary}88 0%, transparent 65%)`
   )
 
-  return [...radials, '#050505'].join(', ')
+  // base was '#050505' (black) — fixed to '#07070f' (dark navy)
+  return [...radials, '#07070f'].join(', ')
 }
