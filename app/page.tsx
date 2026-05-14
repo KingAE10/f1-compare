@@ -132,7 +132,7 @@ export default function Home() {
                 {/* Red accent stripe */}
                 <rect x="80" y="27" width="100" height="6" rx="3" fill="#DC0000" opacity="0.7" />
                 {/* Halo */}
-                <path d="M 95 20 Q 110 14 125 20" stroke="#gold" strokeWidth="2" fill="none" stroke="#aaa" opacity="0.6" />
+                <path d="M 95 20 Q 110 14 125 20" stroke="#aaa" strokeWidth="2" fill="none" opacity="0.6" />
               </svg>
             </motion.div>
 
